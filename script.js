@@ -8,7 +8,7 @@ document.getElementById('ruleta-form').addEventListener('submit', function(event
 
     // Validar los datos y enviar al Google Apps Script
     if (nombre && fecha && numero) {
-        fetch('https://script.google.com/macros/s/AKfycbxMdB3dNVgKJEAx2FdN7hluq4zrGxQTyIkfjsSk0Yd1CvA4AOMZy8VNf_eSqR8ofeLb/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbyly0amkDokMdQZjEWp_y_wdFRcuYlmnGCIq-TNBU8wpEpJaLGTNmQ_cAOhKRlrdfo/exec', {
             method: 'POST',
             body: new URLSearchParams({
                 nombre: nombre,
