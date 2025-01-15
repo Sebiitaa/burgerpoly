@@ -1,30 +1,18 @@
+// Este es el JavaScript que se ejecutará al enviar el formulario
 document.getElementById('formulario').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita el envío por defecto del formulario
+    event.preventDefault();  // Prevenir el envío normal del formulario
 
-    // Obtener los valores del formulario
+    // Obtener los datos del formulario
     const nombre = document.getElementById('nombre').value;
     const dia = document.getElementById('dia').value;
 
-    if (nombre && dia) {
-        // Aquí va la URL de tu script de Google Apps (la que obtuviste al desplegarlo como Web App)
-        const url = 'https://script.google.com/macros/s/AKfycbxwHDuOqzxEXx5mJ6tvyDxQucp5hBDk93mSAJf04ISvc1hsSgtG8G3IPyCPL09yNeDo/exec';
+    // Mostrar los datos en la consola (esto es solo para pruebas)
+    console.log('Nombre:', nombre);
+    console.log('Día:', dia);
 
-        // Enviar los datos a Google Apps Script
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `nombre=${encodeURIComponent(nombre)}&dia=${encodeURIComponent(dia)}`
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert('Formulario enviado correctamente');
-            document.getElementById('formulario').reset(); // Limpiar el formulario
-        })
-        .catch(error => {
-            console.error('Error al enviar el formulario:', error);
-            alert('Hubo un error al enviar el formulario. Intenta de nuevo.');
-        });
-    }
+    // Si deseas realizar algún otro proceso con los datos aquí es el lugar para hacerlo
+    alert('Formulario enviado con éxito!\nNombre: ' + nombre + '\nDía: ' + dia);
 });
+
+
+//API: AIzaSyDJNRhdoFp4ZtzzcgpGp37nxSflqXJHj3M
