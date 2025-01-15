@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Ruleta</title>
+    <title>Registro de Clientes</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="form-container">
-        <h1>Registro de Ruleta</h1>
-        <form id="ruleta-form" action="https://script.google.com/macros/s/AKfycbyly0amkDokMdQZjEWp_y_wdFRcuYlmnGCIq-TNBU8wpEpJaLGTNmQ_cAOhKRlrdfo/exec" method="POST">
+        <h1>Registrar Cliente</h1>
+        <form id="formulario" action="javascript:void(0)">
             <div class="form-group">
                 <label for="nombre">Nombre del Cliente:</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
             </div>
             <div class="form-group">
-                <label for="fecha">Día de la Semana:</label>
-                <select id="fecha" name="fecha" required>
+                <label for="dia">Selecciona el día:</label>
+                <select id="dia" name="dia" required>
                     <option value="" disabled selected>Selecciona un día</option>
-                    <!-- Los días de la semana se insertan aquí dinámicamente -->
+                    <option value="LUNES">Lunes</option>
+                    <option value="MARTES">Martes</option>
+                    <option value="MIÉRCOLES">Miércoles</option>
+                    <option value="JUEVES">Jueves</option>
+                    <option value="VIERNES">Viernes</option>
+                    <option value="SÁBADO">Sábado</option>
+                    <option value="DOMINGO">Domingo</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="numero">Número obtenido en la ruleta:</label>
-                <input type="number" id="numero" name="numero" placeholder="Ingresa el número" required>
             </div>
             <button type="submit">Registrar</button>
         </form>

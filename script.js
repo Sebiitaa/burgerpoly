@@ -1,44 +1,30 @@
-document.getElementById('ruleta-form').addEventListener('submit', function(event) {
+document.getElementById('formulario').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita el envío por defecto del formulario
 
-    // Obtener los valores ingresados
+    // Obtener los valores del formulario
     const nombre = document.getElementById('nombre').value;
-    const fecha = document.getElementById('fecha').value;
-    const numero = document.getElementById('numero').value;
+    const dia = document.getElementById('dia').value;
 
-    // Validar los datos y enviar al Google Apps Script
-    if (nombre && fecha && numero) {
-        fetch('https://script.google.com/macros/s/AKfycbyly0amkDokMdQZjEWp_y_wdFRcuYlmnGCIq-TNBU8wpEpJaLGTNmQ_cAOhKRlrdfo/exec', {
+    if (nombre && dia) {
+        // Aquí va la URL de tu script de Google Apps (la que obtuviste al desplegarlo como Web App)
+        const url = 'https://script.google.com/macros/s/AKfycbxwmrPa4Tf87fj74EviqeW-VncRgIzoPO_ERI7ne37LH5ekwFK7R2UvNkGCicJfVXOH/exec';
+
+        // Enviar los datos a Google Apps Script
+        fetch(url, {
             method: 'POST',
-            body: new URLSearchParams({
-                nombre: nombre,
-                fecha: fecha,
-                numero: numero
-            })
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `nombre=${encodeURIComponent(nombre)}&dia=${encodeURIComponent(dia)}`
         })
         .then(response => response.text())
         .then(data => {
-            console.log('Respuesta de Google Apps Script:', data);
-            alert('Registro completado correctamente');
+            alert('Formulario enviado correctamente');
+            document.getElementById('formulario').reset(); // Limpiar el formulario
         })
         .catch(error => {
             console.error('Error al enviar el formulario:', error);
-            alert('Hubo un problema al enviar el formulario');
+            alert('Hubo un error al enviar el formulario. Intenta de nuevo.');
         });
-    } else {
-        alert('Por favor completa todos los campos.');
     }
 });
-
-// Rellenar el campo de fecha con los días de la semana
-window.onload = function() {
-    const fechaSelect = document.getElementById('fecha');
-    const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-
-    diasSemana.forEach(dia => {
-        const option = document.createElement('option');
-        option.value = dia;
-        option.textContent = dia;
-        fechaSelect.appendChild(option);
-    });
-};
