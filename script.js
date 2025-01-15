@@ -7,7 +7,7 @@ document.getElementById('formulario').addEventListener('submit', function(event)
 
     if (nombre && dia) {
         // Aquí va la URL de tu script de Google Apps (la que obtuviste al desplegarlo como Web App)
-        const url = 'https://script.google.com/macros/s/AKfycbyU3uVAC3QpCJkW0fbcvButI69zyCn3YVcZ8NqgWDi-moL-vW7_aCDj2vCeK_ott1Ng/exec';
+        const url = 'https://script.google.com/macros/s/AKfycbxwHDuOqzxEXx5mJ6tvyDxQucp5hBDk93mSAJf04ISvc1hsSgtG8G3IPyCPL09yNeDo/exec';
 
         // Enviar los datos a Google Apps Script
         fetch(url, {

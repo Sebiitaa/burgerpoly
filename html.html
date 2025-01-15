@@ -3,34 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Clientes</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Formulario</title>
 </head>
 <body>
     <div class="form-container">
         <h1>Registrar Cliente</h1>
-        <form id="formulario" action="javascript:void(0)">
-            <div class="form-group">
-                <label for="nombre">Nombre del Cliente:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="dia">Selecciona el día:</label>
-                <select id="dia" name="dia" required>
-                    <option value="" disabled selected>Selecciona un día</option>
-                    <option value="LUNES">Lunes</option>
-                    <option value="MARTES">Martes</option>
-                    <option value="MIÉRCOLES">Miércoles</option>
-                    <option value="JUEVES">Jueves</option>
-                    <option value="VIERNES">Viernes</option>
-                    <option value="SÁBADO">Sábado</option>
-                    <option value="DOMINGO">Domingo</option>
-                </select>
-            </div>
-            <button type="submit">Registrar</button>
+        <form id="formulario">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <select name="fecha" required>
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+            <button type="submit">Enviar</button>
         </form>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevenir que el formulario se envíe de forma tradicional
+
+            const formData = new FormData(event.target);
+            const data = new URLSearchParams(formData);
+
+            fetch('https://script.google.com/macros/s/AKfycbxwHDuOqzxEXx5mJ6tvyDxQucp5hBDk93mSAJf04ISvc1hsSgtG8G3IPyCPL09yNeDo/exec', {
+                method: 'POST',
+                body: data,
+            })
+            .then(response => response.text())
+            .then(responseText => {
+                console.log('Formulario enviado exitosamente:', responseText);
+            })
+            .catch(error => {
+                console.error('Error al enviar el formulario:', error);
+            });
+        });
+    </script>
 </body>
 </html>
