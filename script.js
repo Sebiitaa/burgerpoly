@@ -6,9 +6,6 @@ document.getElementById('ruleta-form').addEventListener('submit', function(event
     const fecha = document.getElementById('fecha').value;
     const numero = document.getElementById('numero').value;
 
-    // Verificar que los valores están siendo obtenidos correctamente
-    console.log('Datos del formulario:', { nombre, fecha, numero });
-
     // Validar los datos y enviar al Google Apps Script
     if (nombre && fecha && numero) {
         fetch('https://script.google.com/macros/s/AKfycbxMdB3dNVgKJEAx2FdN7hluq4zrGxQTyIkfjsSk0Yd1CvA4AOMZy8VNf_eSqR8ofeLb/exec', {
@@ -32,3 +29,16 @@ document.getElementById('ruleta-form').addEventListener('submit', function(event
         alert('Por favor completa todos los campos.');
     }
 });
+
+// Rellenar el campo de fecha con los días de la semana
+window.onload = function() {
+    const fechaSelect = document.getElementById('fecha');
+    const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+    diasSemana.forEach(dia => {
+        const option = document.createElement('option');
+        option.value = dia;
+        option.textContent = dia;
+        fechaSelect.appendChild(option);
+    });
+};
