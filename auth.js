@@ -1,8 +1,3 @@
-/* exported gapiLoaded */
-/* exported gisLoaded */
-/* exported handleAuthClick */
-/* exported handleSignoutClick */
-
 // TODO(developer): Set to client ID and API key from the Developer Console
 const CLIENT_ID = '104158597892-9r5qe5ns7vphtu5fia49kt8rjbe9eak6.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyDJNRhdoFp4ZtzzcgpGp37nxSflqXJHj3M';
@@ -17,9 +12,6 @@ const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 let tokenClient;
 let gapiInited = false;
 let gisInited = false;
-
-document.getElementById("gapi").addEventListener("load", gapiLoaded);
-document.getElementById("gis").addEventListener("load", gisLoaded);
 
 document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
@@ -51,7 +43,7 @@ function gisLoaded() {
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
     scope: SCOPES,
-    callback: (resp) => handleAuthResponse(resp), // handle response here
+    callback: '', // defined later
   });
   gisInited = true;
   maybeEnableButtons();
@@ -67,33 +59,30 @@ function maybeEnableButtons() {
 }
 
 /**
- * Sign in the user upon button click.
+ *  Sign in the user upon button click.
  */
 function handleAuthClick() {
+  tokenClient.callback = async (resp) => {
+    if (resp.error !== undefined) {
+      throw (resp);
+    }
+    document.getElementById('signout_button').style.visibility = 'visible';
+    document.getElementById('authorize_button').innerText = 'Refresh';
+    await listMajors();
+  };
+
   if (gapi.client.getToken() === null) {
     // Prompt the user to select a Google Account and ask for consent to share their data
     // when establishing a new session.
-    tokenClient.requestAccessToken({ prompt: 'consent' });
+    tokenClient.requestAccessToken({prompt: 'consent'});
   } else {
     // Skip display of account chooser and consent dialog for an existing session.
-    tokenClient.requestAccessToken({ prompt: '' });
+    tokenClient.requestAccessToken({prompt: ''});
   }
 }
 
 /**
- * Callback after authorization is complete.
- */
-function handleAuthResponse(resp) {
-  if (resp.error !== undefined) {
-    throw (resp);
-  }
-  document.getElementById('signout_button').style.visibility = 'visible';
-  document.getElementById('authorize_button').innerText = 'Refresh';
-  listMajors();
-}
-
-/**
- * Sign out the user upon button click.
+ *  Sign out the user upon button click.
  */
 function handleSignoutClick() {
   const token = gapi.client.getToken();
@@ -129,8 +118,7 @@ async function listMajors() {
   }
   // Flatten to string to display
   const output = range.values.reduce(
-    (str, row) => `${str}${row[0]}, ${row[4]}\n`,
-    'Name, Major:\n'
-  );
+      (str, row) => `${str}${row[0]}, ${row[4]}\n`,
+      'Name, Major:\n');
   document.getElementById('content').innerText = output;
 }
