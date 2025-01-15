@@ -1,3 +1,7 @@
+     /* exported gapiLoaded */
+      /* exported gisLoaded */
+      /* exported handleAuthClick */
+      /* exported handleSignoutClick */
 
       // TODO(developer): Set to client ID and API key from the Developer Console
       const CLIENT_ID = '104158597892-9r5qe5ns7vphtu5fia49kt8rjbe9eak6.apps.googleusercontent.com';
@@ -108,18 +112,21 @@
         try {
           // Fetch first 10 files
           response = await gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: '1OIbR96aSFx9MowjoUbJHYQlLdpNFvsIjVZeLluddl8Y',
-            range: 'semana burger!A:I',
+            spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
+            range: 'Class Data!A2:E',
           });
         } catch (err) {
-
-          console.error(err)
+          document.getElementById('content').innerText = err.message;
           return;
         }
         const range = response.result;
         if (!range || !range.values || range.values.length == 0) {
-          console.warn("no se encontraron valores")
+          document.getElementById('content').innerText = 'No values found.';
           return;
         }
-        console.log(range.values)
+        // Flatten to string to display
+        const output = range.values.reduce(
+            (str, row) => `${str}${row[0]}, ${row[4]}\n`,
+            'Name, Major:\n');
+        document.getElementById('content').innerText = output;
       }
